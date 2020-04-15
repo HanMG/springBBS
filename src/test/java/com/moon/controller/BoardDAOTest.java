@@ -31,24 +31,16 @@ public class BoardDAOTest {
 		dao.create(board);
 	}
 	
-	@Test
-	public void testRead() throws Exception{
-		logger.info(dao.read(1).toString());
-	}
-	
-	@Test
-	public void testUpadet() throws Exception{
-		BoardVO board = new BoardVO();
-		board.setBno(1);
-		board.setTitle("수정된 타이틀 입니다.");
-		board.setContent("수정된 내용입니다.");
-		dao.update(board);
-	}
-	
-	@Test
-	public void testDelete() throws Exception{
-		dao.delete(1);
-	}
+	/*
+	 * @Test public void testRead() throws Exception{
+	 * logger.info(dao.read(1).toString()); }
+	 * 
+	 * @Test public void testUpadet() throws Exception{ BoardVO board = new
+	 * BoardVO(); board.setBno(1); board.setTitle("수정된 타이틀 입니다.");
+	 * board.setContent("수정된 내용입니다."); dao.update(board); }
+	 * 
+	 * @Test public void testDelete() throws Exception{ dao.delete(1); }
+	 */
 	
 	
 }

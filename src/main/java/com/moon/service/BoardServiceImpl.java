@@ -17,8 +17,8 @@ public class BoardServiceImpl implements BoardService{
 	
 	/* 게시글 등록 */
 	@Override
-	public void regist(BoardVO board) throws Exception {
-		dao.create(board);		
+	public void regist(BoardVO board) throws Exception {		
+		dao.create(board);				
 	}
 
 	/* 게시글 읽기 */

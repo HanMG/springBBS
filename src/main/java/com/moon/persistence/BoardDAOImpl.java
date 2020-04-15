@@ -18,7 +18,7 @@ public class BoardDAOImpl implements BoardDAO {
 	private static String namespace = "com.moon.mapper.BoardMapper";
 
 	@Override
-	public void create(BoardVO vo) throws Exception {	
+	public void create(BoardVO vo) throws Exception {			
 		session.insert(namespace+".create",vo);
 	}
 
