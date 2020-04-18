@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.moon.domain.BoardVO;
 import com.moon.domain.Criteria;
@@ -23,6 +25,7 @@ public class BoardDAOTest {
 	@Inject
 	private BoardDAO dao;
 
+	
 	/*
 	 * @Test public void testCreate() throws Exception {
 	 * 
@@ -46,19 +49,32 @@ public class BoardDAOTest {
 	 * boardVO.getTitle()); }
 	 * 
 	 * }
+	 * 
+	 * // 페이징 테스트
+	 * 
+	 * @Test public void testListCriteria() throws Exception{ Criteria cri = new
+	 * Criteria(); cri.setPage(2); cri.setPerPageNum(20);
+	 * 
+	 * List<BoardVO> list = dao.listCriteria(cri);
+	 * 
+	 * for(BoardVO boardVO : list) {
+	 * logger.info(boardVO.getBno()+":"+boardVO.getTitle()); } }
 	 */
-	// 페이징 테스트
+	
 	@Test
-	public void testListCriteria() throws Exception{
-		Criteria cri = new Criteria();
-		cri.setPage(2);
-		cri.setPerPageNum(20);
+	public void testURI2() throws Exception{
+		UriComponents uriComponents = 
+				UriComponentsBuilder.newInstance()
+				.path("/{module}/{page}")
+				.queryParam("bno", 12)
+				.queryParam("perPageNum", 20)
+				.build()
+				.expand("board","read")
+				.encode();
 		
-		List<BoardVO> list = dao.listCriteria(cri);
+		logger.info("/board/read?bno=12&perPageNum=20");
+		logger.info(uriComponents.toString());
 		
-		for(BoardVO boardVO : list) {
-			logger.info(boardVO.getBno()+":"+boardVO.getTitle());
-		}
 	}
 
 }

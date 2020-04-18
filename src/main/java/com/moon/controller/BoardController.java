@@ -5,7 +5,9 @@ import javax.inject.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -99,5 +101,38 @@ public class BoardController {
 		pageMaker.setTotalCount(service.listCountCriteria(cri));
 		
 		model.addAttribute("pageMaker",pageMaker);
+	}
+	
+	/* 게시글 읽기, 삭제, 수정부분에서 다시 보던 리스트 넘버로 돌아가게 개선 */
+	@RequestMapping(value = "/readPage", method = RequestMethod.GET)
+	public void read(@RequestParam("bno") int bno, @ModelAttribute("cri") Criteria cri, Model model) throws Exception {
+		model.addAttribute(service.read(bno));
+	}
+	
+	@RequestMapping(value = "/removePage", method = RequestMethod.POST)
+	public String remove(@RequestParam("bno") int bno, Criteria cri, RedirectAttributes rttr) throws Exception{
+		service.remove(bno);
+		
+		rttr.addAttribute("page", cri.getPage());
+		rttr.addAttribute("perPageNum",cri.getPerPageNum());
+		rttr.addFlashAttribute("msg","success");
+		
+		return "redirect:/board/listPage";
+	}
+	// 수정 페이지로 이동
+	@RequestMapping(value="/modifyPage", method = RequestMethod.GET)
+	public void modifyPagingGET(@RequestParam("bno") int bno, @ModelAttribute("cri") Criteria cri, Model model) throws Exception{
+		model.addAttribute(service.read(bno));
+	}
+	
+	// 수정 작업.
+	@RequestMapping(value="/modifyPage", method = RequestMethod.POST)
+	public String modifyPagingPOST(BoardVO board, Criteria cri, RedirectAttributes rttr) throws Exception{
+		service.modify(board);
+		
+		rttr.addAttribute("page", cri.getPage());
+		rttr.addAttribute("perPageNum", cri.getPerPageNum());
+		rttr.addFlashAttribute("msg", "success");
+		return "redirect:/board/listPage";
 	}
 }
