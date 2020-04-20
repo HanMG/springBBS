@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.moon.domain.BoardVO;
 import com.moon.domain.Criteria;
+import com.moon.domain.SearchCriteria;
 import com.moon.persistence.BoardDAO;
 
 @Service
@@ -58,4 +59,15 @@ public class BoardServiceImpl implements BoardService{
 		return dao.countPaging(cri);
 	}
 
+	// 검색조건에 따른 조회
+	@Override
+	public List<BoardVO> listSearchCriteria(SearchCriteria cri) throws Exception {
+		return dao.listSearch(cri);
+	}
+
+	// 검색 조건에 따른 총 게시물 수 반환
+	@Override
+	public int listSearchCount(SearchCriteria cri) throws Exception {
+		return dao.listSearchCount(cri);
+	}
 }
