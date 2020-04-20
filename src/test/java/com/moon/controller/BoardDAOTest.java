@@ -15,7 +15,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.moon.domain.BoardVO;
 import com.moon.domain.Criteria;
-import com.moon.domain.SearchCriteria;
 import com.moon.persistence.BoardDAO;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -62,35 +61,20 @@ public class BoardDAOTest {
 	 * logger.info(boardVO.getBno()+":"+boardVO.getTitle()); } }
 	 */
 	
-	/*
-	 * @Test public void testURI2() throws Exception{ UriComponents uriComponents =
-	 * UriComponentsBuilder.newInstance() .path("/{module}/{page}")
-	 * .queryParam("bno", 12) .queryParam("perPageNum", 20) .build()
-	 * .expand("board","read") .encode();
-	 * 
-	 * logger.info("/board/read?bno=12&perPageNum=20");
-	 * logger.info(uriComponents.toString());
-	 * 
-	 * }
-	 */
-	
 	@Test
-	public void testDynamic1() throws Exception{
-		SearchCriteria cri = new SearchCriteria();
-		cri.setPage(1);
-		cri.setKeyword("글");
-		cri.setSearchType("t");
+	public void testURI2() throws Exception{
+		UriComponents uriComponents = 
+				UriComponentsBuilder.newInstance()
+				.path("/{module}/{page}")
+				.queryParam("bno", 12)
+				.queryParam("perPageNum", 20)
+				.build()
+				.expand("board","read")
+				.encode();
 		
-		logger.info("=================");
+		logger.info("/board/read?bno=12&perPageNum=20");
+		logger.info(uriComponents.toString());
 		
-		List<BoardVO> list = dao.listSearch(cri);
-		
-		for(BoardVO boardVO : list) {
-			logger.info(boardVO.getBno()+":"+boardVO.getTitle());
-		}
-		
-		logger.info("=================");
-		logger.info("Count: "+dao.listSearchCount(cri));
 	}
 
 }
